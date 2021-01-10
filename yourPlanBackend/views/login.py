@@ -1,33 +1,20 @@
 # -*- coding: utf-8 -*-
 """
 @author:韩先钊
-@file: index.py
-@time: 2021/1/9  14:31
+@file: login.py
+@time: 2021/1/10  17:46
 """
-import requests
 
+
+import requests
 from flask import Blueprint, render_template, request, session, redirect
 from flask import current_app as app
-from uuid import uuid4
+
+login = Blueprint('login', __name__)
 
 
-home = Blueprint('home', __name__)
-
-
-@home.route('/index')
-def index():
-    user_info = session.get('user_info')
-    print(user_info)
-    return 'index'
-
-
-@home.route('/test')
-def test():
-    return 'test'
-
-
-@home.route('/userinfo', methods=['POST'])
-def userinfo():
+@login.route('/userid', methods=['POST'])
+def userid():
     if request.method == "POST":
         code = request.form.get('code')
         wx_appid = app.config["WX_APPID"]
