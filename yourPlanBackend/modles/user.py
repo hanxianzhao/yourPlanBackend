@@ -18,10 +18,12 @@ class Users(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(32), index=True)
+    name = Column(String(32))
     age = Column(Integer, default=18)
     email = Column(String(32), unique=True)
+    city = Column(String(64), default="")
     ctime = Column(DateTime, default=datetime.datetime.now)
+    openid = Column(String(64), index=True)
     extra = Column(Text, nullable=True)
 
     __table_args__ = (
@@ -61,5 +63,5 @@ def drop_db():
 
     Base.metadata.drop_all(engine)
 
-# init_db()
-drop_db()
+init_db()
+# drop_db()
