@@ -6,14 +6,14 @@
 """
 
 from flask import Flask
-from .views import account, home
-
+from .views import config_blueprint
+from .extensions import config_extensions
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object("settings.DevelopmentConfig")
-
-
-    app.register_blueprint(account.account)
-    app.register_blueprint(home.home)
+    # 蓝本注册
+    config_blueprint(app)
+    # 加载扩展
+    config_extensions(app)
     return app
