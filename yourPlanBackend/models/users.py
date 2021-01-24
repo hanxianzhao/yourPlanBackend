@@ -11,7 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
 from yourPlanBackend.extensions import db, login_manager
-# from flask_login import UserMixin
+from flask_login import UserMixin
 
 
 # from flask import Flask
@@ -26,10 +26,10 @@ from yourPlanBackend.extensions import db, login_manager
 
 # from .post import Post
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    openid = db.Column(db.String(30), default="", unique=True)
+    openid = db.Column(db.String(30), default="", unique=True, index=True)
     nickname = db.Column(db.String(100), default="")
     avatarurl = db.Column(db.String(100), default="")
     gender = db.Column(db.Integer, default=0)

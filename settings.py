@@ -11,7 +11,7 @@ class Config(object):
     SECRET_KEY = "qwertyuiosdfghj"
     WX_APPID = "wx9e77f1caf02ba15c"
     WX_SECRET_KEY = "a5473ef14e9029751d9a940b91cccbbe"
-    SQLALCHEMY_DATABASE_URI = "mysql://root:0819@127.0.0.1:3306/test_sqlalchemy"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:0819@127.0.0.1:3306/yourplanbackenddata"
 
     # 数据库公用配置
     # 无警告
@@ -26,7 +26,7 @@ class ProductionConfig(Config):
 
 # 开发环境配置
 class DevelopmentConfig(Config):
-    DEBUG = True
+    pass
 
 
 # 测试环境配置
