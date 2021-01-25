@@ -13,7 +13,6 @@ from yourPlanBackend.models import User
 from sqlalchemy import or_
 from yourPlanBackend.extensions import db
 from flask_login import login_user, logout_user, current_user
-import json
 
 login = Blueprint('login', __name__)
 
@@ -41,16 +40,12 @@ def userid():
             # 创建用户
             user = User(openid=openid)
             db.session.add(user)
+            # 方便后面直接能拿到user.id
+            db.session.flush()
             db.session.commit()
-        # else:
-        # 创建token , 看下remember参数是怎么用的
+        # 登陆用户，后面直接获取用户进行使用
         login_user(user)
+        # 创建token , 看下remember参数是怎么用的，暂时先使用openid和session_key（暂时先不保存）后面换user.id
         user_token = current_user.generate_token({'openid': openid, 'session_key': session_key})
-        # user_token = current_user.generate_token({'id': user.id})
-        print("user_token===", user_token)
-        print(type(user_token))
         response = {"token": str(user_token)}
-        # return jsonify(token=user_token)
         return jsonify(response)
-        # return response
-        # return user_token
