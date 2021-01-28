@@ -40,6 +40,9 @@ class User(UserMixin, db.Model):
     ctime = db.Column(db.DateTime, default=datetime.utcnow)
     mobile = db.Column(db.String(50), default="")
 
+    # 反向引用
+    plans = db.relationship('Plan', backref='user', lazy=True)
+
     def __repr__(self):
         return self.openid
 

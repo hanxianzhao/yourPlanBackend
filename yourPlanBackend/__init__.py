@@ -9,6 +9,7 @@ from flask import Flask
 from .views import config_blueprint
 from .extensions import config_extensions
 from .models.users import User
+from .models.plans import Plan
 
 def create_app():
     app = Flask(__name__)
