@@ -7,12 +7,14 @@
 from .home import home
 from .account import account
 from .login import login
+from .plan import plan
 
 # 路由配置，是否需要default
 DEFAULT_BLUEPRINT = (
     (home, ''),
     (account, ''),
-    (login, '')
+    (login, ''),
+    (plan, '')
 )
 
 
