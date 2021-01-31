@@ -6,6 +6,7 @@
 """
 
 import requests
+import json
 from flask import Blueprint, render_template, request, session, redirect, jsonify
 from flask import current_app as app
 from yourPlanBackend import urls
@@ -21,7 +22,10 @@ login = Blueprint('login', __name__)
 def userid():
     # 如果访问是post 则传过来code 通过appid和secret_key 和code去查openid和session_key
     if request.method == "POST":
-        code = request.form.get('code')
+        # 改为使用json去获取code的值
+        request_param = json.loads(request.get_data(as_text=True))
+        code = request_param.get('code', '')
+        # code = request.form.get('code')
         # 此处要加code判断
         print(code)
         wx_appid = app.config["WX_APPID"]
@@ -46,6 +50,8 @@ def userid():
         # 登陆用户，后面直接获取用户进行使用
         login_user(user)
         # 创建token , 看下remember参数是怎么用的，暂时先使用openid和session_key（暂时先不保存）后面换user.id
-        user_token = current_user.generate_token({'openid': openid, 'session_key': session_key})
-        response = {"token": str(user_token)}
-        return jsonify(response)
+        #Todo 把session-key 保存到redis key使用session_key_$userid:session-key
+        # 创建的token是字节型的先将其解码转换为字符串型, 暂时先不保存session key
+        # user_token = User.generate_token({'openid': openid, 'session_key': session_key}).decode()
+        user_token = User.generate_token({'user_id': user.id}).decode()
+        return jsonify({"token": user_token})

@@ -6,7 +6,7 @@
 """
 
 from datetime import datetime
-from yourPlanBackend.extensions import db, login_manager
+from yourPlanBackend.extensions import db
 
 
 # id
@@ -30,11 +30,11 @@ class Plan(db.Model):
     # 需要完成时间
     plantime = db.Column(db.String(20))
     # 需要完成的日期
-    plandata = db.Column(db.String(20))
+    plandata = db.Column(db.DATE)
 
-    planweek = db.Column(db.Integer)
-    planmonth = db.Column(db.Integer)
-    planyear = db.Column(db.Integer)
+    planweek = db.Column(db.Enum('本周', '下周', '每周'))
+    planmonth = db.Column(db.Enum('本月', '下月', '每月'))
+    planyear = db.Column(db.Enum('今年', '每年'))
     whetherdone = db.Column(db.Integer, default=0)
     whetherimp = db.Column(db.Integer, default=0)
     # 外键
